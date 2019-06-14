@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Firepuma.Api.Common.Errors;
+using Firepuma.Api.Abstractions.Errors;
 using Firepuma.Api.Common.Exceptions.FriendlyExceptions.Extensions;
 using Firepuma.Api.Common.Exceptions.FriendlyExceptions.Options;
 using Microsoft.AspNetCore.Http;

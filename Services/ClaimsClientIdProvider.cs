@@ -1,7 +1,8 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
-using Firepuma.Api.Common.Errors;
+using Firepuma.Api.Abstractions.Auth;
+using Firepuma.Api.Abstractions.Errors;
 using Firepuma.Api.Common.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;

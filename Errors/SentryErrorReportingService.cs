@@ -1,4 +1,5 @@
 using System;
+using Firepuma.Api.Abstractions.Errors;
 using Microsoft.Extensions.Logging;
 using Sentry;
 using Sentry.Protocol;
