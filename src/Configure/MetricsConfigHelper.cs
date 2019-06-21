@@ -10,48 +10,14 @@ namespace Firepuma.Api.Common.Configure
 {
     public static class MetricsConfigHelper
     {
-        public static InfluxConfig LoadInfluxMetricsConfigFromEnv(bool requireEnv)
-        {
-            var url = Environment.GetEnvironmentVariable("INFLUX_METRICS_URL");
-            var database = Environment.GetEnvironmentVariable("INFLUX_METRICS_DATABASE");
-            var username = Environment.GetEnvironmentVariable("INFLUX_METRICS_USERNAME");
-            var password = Environment.GetEnvironmentVariable("INFLUX_METRICS_PASSWORD");
-
-            if (requireEnv && string.IsNullOrWhiteSpace(url))
-            {
-                throw new Exception("INFLUX_METRICS_URL environment variable is required but missing");
-            }
-
-            if (requireEnv && string.IsNullOrWhiteSpace(database))
-            {
-                throw new Exception("INFLUX_METRICS_DATABASE environment variable is required but missing");
-            }
-
-            if (requireEnv && string.IsNullOrWhiteSpace(username))
-            {
-                throw new Exception("INFLUX_METRICS_USERNAME environment variable is required but missing");
-            }
-
-            if (string.IsNullOrWhiteSpace(url))
-            {
-                Console.WriteLine("WARNING: INFLUX_METRICS_URL environment variable is empty, continuing without it");
-
-                return null;
-            }
-
-            Console.WriteLine("Loaded INFLUX_METRICS_URL environment variable");
-
-            return new InfluxConfig(url, database, username, password);
-        }
-
-        public static void ConfigureMetrics(IMetricsBuilder builder, InfluxConfig influxConfig, string appName)
+        public static void ConfigureMetrics(IMetricsBuilder builder, MetricsInfluxConfig config, string appName)
         {
             builder.Report.ToInfluxDb(options =>
             {
-                options.InfluxDb.BaseUri = new Uri(influxConfig.Url);
-                options.InfluxDb.Database = influxConfig.Database;
-                options.InfluxDb.UserName = influxConfig.Username;
-                options.InfluxDb.Password = influxConfig.Password;
+                options.InfluxDb.BaseUri = new Uri(config.Url);
+                options.InfluxDb.Database = config.Database;
+                options.InfluxDb.UserName = config.Username;
+                options.InfluxDb.Password = config.Password;
                 options.HttpPolicy.BackoffPeriod = TimeSpan.FromSeconds(30);
                 options.HttpPolicy.FailuresBeforeBackoff = 5;
                 options.HttpPolicy.Timeout = TimeSpan.FromSeconds(10);
