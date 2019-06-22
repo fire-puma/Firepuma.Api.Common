@@ -27,6 +27,7 @@ namespace Firepuma.Api.Common.Configure
             configuration.Bind(vaultSeederSectionKey, seedData);
 
             var logger = new LoggerFactory()
+                .AddConsole()
                 .CreateLogger<VaultWriteService>();
 
             // seed

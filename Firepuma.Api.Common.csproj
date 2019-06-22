@@ -13,6 +13,7 @@
         <PackageReference Include="Firepuma.Api.Abstractions" Version="0.0.4" />
         <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="2.2.0" />
         <PackageReference Include="NetCore.HashiCorp.Vault" Version="1.0.3" />
