@@ -43,6 +43,7 @@ namespace Firepuma.Api.Common.Configure
             foreach (var secretPath in options.Secrets)
             {
                 var configSectionName = secretPath.Replace("/", ":");
+                logger.LogInformation($"Reading vault config from section '{configSectionName}'");
                 var jsonString = vaultConfiguration.GetValue<string>(configSectionName);
                 var secretValues = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonString);
                 foreach (var keyValue in secretValues)
