@@ -26,7 +26,7 @@ namespace Firepuma.Api.Common.Configure
         public static T GetValidated<T>(this IConfiguration configuration)
         {
             var config = configuration.Get<T>();
-            
+
             if (config == null)
             {
                 var configDescription = "Config";
@@ -34,14 +34,15 @@ namespace Firepuma.Api.Common.Configure
                 {
                     configDescription = $"Config section {configurationSection.Key}";
                 }
+
                 throw new ArgumentNullException(typeof(T).FullName, $"Object {typeof(T).FullName} instance is null but required in {nameof(GetValidated)} - {configDescription}");
             }
-            
+
             ForceValidateObject(config);
-            
+
             return config;
         }
-        
+
         public static void ForceValidateObject(object obj)
         {
             if (obj == null)
@@ -63,9 +64,14 @@ namespace Firepuma.Api.Common.Configure
 
         private static IEnumerable<string> ValidationErrors(object obj)
         {
-            var context = new ValidationContext(obj, serviceProvider: null, items: null);
             var results = new List<ValidationResult>();
-            Validator.TryValidateObject(obj, context, results, true);
+            var validator = new DataAnnotationsValidator.DataAnnotationsValidator();
+
+            if (!validator.TryValidateObjectRecursive(obj, results) && !results.Any())
+            {
+                yield return "Object validation failed";
+            }
+
             foreach (var validationResult in results)
             {
                 yield return validationResult.ErrorMessage;
